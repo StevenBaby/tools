@@ -1,30 +1,25 @@
 {% extends 'base.html' %}
 {% block container %}
 
-<div class="ui segment raised">
-    <div class="ui huge aligned divided list">
-        {% for item in items %}
-        <div class="item">
-            <div class="right floated content">
-                <div class="ui">{{ item.mtime.date() }}</div>
-            </div>
-            {% if item.type == 'dir' %}
+<table class="ui celled striped large table">
+    {% for item in items %}
+    <tr>
+        <td class="ui fluid">
+            <a href="{{filename}}/{{item.basename}}">
+                {% if item.type == 'dir' %}
                 <i class="folder icon"></i>
-            {% else %}
+                {% else %}
                 <i class="file icon"></i>
-            {% endif %}
-        
-            <div class="ui content fluid">
-                <a href="{{filename}}/{{item.basename}}">
-                     {{ item.basename }}
-                </a>
-            </div>
-        </div>
-            
-        {% endfor %}
-    </div>
-</div>
-
+                {% endif %}
+                {{ item.basename }}
+            </a>
+        </td>
+        <td class="right aligned">
+            <div class="ui metadata">{{ item.mtime.strftime("%Y-%m-%d %H:%M:%S") }}</div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
 
 {% block js %}

@@ -15,7 +15,7 @@ from werkzeug.routing import BaseConverter
 
 import config
 
-__VERSION__ = "0.0.1.0"
+__VERSION__ = "0.0.1.1"
 
 
 dirname = os.path.dirname(os.path.abspath(__file__))
@@ -68,6 +68,10 @@ def get_response(filename=""):
 
     data = get_data()
     data.filename = filename
+    if filename:
+        data.title = '/{}/'.format(filename)
+    else:
+        data.title = "/"
     data.items = [get_info(os.path.join(filepath, child)) for child in children]
     return render_template("index.html", **data)
 
