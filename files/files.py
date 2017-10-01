@@ -15,7 +15,11 @@ from werkzeug.routing import BaseConverter
 
 import config
 
-__VERSION__ = "0.0.0.1"
+__VERSION__ = "0.0.1.0"
+
+
+dirname = os.path.dirname(os.path.abspath(__file__))
+favicon = os.path.join(dirname, "static/images/favicon.ico")
 
 class RegexConverter(BaseConverter):
     def __init__(self, map, *args):
@@ -47,7 +51,7 @@ def get_info(filepath):
     return info
 
 def get_response(filename=""):
-    basket = os.path.join(os.path.dirname(os.path.abspath(__file__)), "basket")
+    basket = os.path.join(dirname, "basket")
     if not os.path.exists(basket):
         return "basket not exists."
         # abort(404)
@@ -71,7 +75,10 @@ def get_response(filename=""):
 @server.route('/')
 @server.route("/<regex('.+'):filename>")
 def index(filename=""):
-    return get_response(filename)
+    if filename == "favicon.ico" and os.path.exists(favicon):
+        return send_file(favicon)
+    else:
+        return get_response(filename)
 
 
 def main():
