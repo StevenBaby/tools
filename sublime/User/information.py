@@ -10,6 +10,9 @@ import datetime
 import sublime_plugin
 
 
+
+
+
 class InformationCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         contents = """'''\n"""\
