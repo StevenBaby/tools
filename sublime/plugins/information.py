@@ -13,7 +13,7 @@ import sublime_plugin
 class InformationCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         contents = """'''\n"""\
-            """Description: ${1:Description...}\n"""\
+            """Description: ${{1:Description...}}\n"""\
             """Author: ${{2:Steven Kang}}\n"""\
             """Datetime: {datetime}\n"""\
             """'''\n""".format(
