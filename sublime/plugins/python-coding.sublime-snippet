@@ -1,7 +1,7 @@
 <snippet>
 <content>
 #!/usr/bin/python3
-# coding=utf8
+# coding=utf-8
 </content>
     <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
     <tabTrigger>#coding</tabTrigger>
