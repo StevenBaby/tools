@@ -280,7 +280,7 @@ class Douban(Source):
 
         soup = self.__get_soup(html=html)
         infos = self.__get_infos(soup=soup)
-        isbn = self.__get_isbn(identifiers, soup)
+        isbn = self.__get_isbn(log, identifiers, soup, infos)
         book = {"isbn13": isbn}
         book["author"] = self.__get_authors(infos)
         book["publisher"] = self.__get_info(infos, "出版社:")
@@ -420,13 +420,18 @@ class Douban(Source):
             intro = intro[find + 6:]
         return intro.strip("[] \n\t")
 
-    def __get_isbn(self, identifiers, soup):
+    def __get_isbn(self, log, identifiers, soup, infos):
         isbn = identifiers.get("isbn", None)
         if isbn:
             return isbn
-        info = soup.select("#info")
-        print(info)
-        return '12312312312'
+        pattern = re.compile(r"ISBN: (\d+)", re.IGNORECASE)
+        isbn = ''
+        for info in infos:
+            match = pattern.match(info)
+            if match:
+                isbn = match.group(1)
+                break
+        return isbn
 
 
 if __name__ == "__main__":  # tests {{{
@@ -442,7 +447,7 @@ if __name__ == "__main__":  # tests {{{
         [
             (
                 {
-                    "identifiers": {"isbn": "9787536692930"},
+                    "identifiers": {"isbn": "9787536692930", "douban": 2567698},
                     "title": "三体",
                     "authors": ["刘慈欣"],
                 },
