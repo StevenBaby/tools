@@ -378,9 +378,9 @@ class Douban(Source):
         tagSelect = str(soup.select("#db-tags-section > div"))
         tagTemp = BeautifulSoup(str(tagSelect), "lxml", exclude_encodings="utf-8")
         tagText = tagTemp.text
+        tagText = tagText.replace('[', ' ')
+        tagText = tagText.replace(']', ' ')
         tags = tagText.split()
-        tags.remove("[")
-        tags.remove("]")
         return tags
 
     def __get_cover(self, soup):
